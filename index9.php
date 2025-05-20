@@ -1,10 +1,6 @@
 <?php
 //Utilizar el mismo código de index8.php pero esta vez guardar la habitación nueva en la base de datos de MySQL. Se puede confirmar visitando index5.php
-$mysqli = new mysqli("127.0.0.1","devuser","1234","hotel");
-if ($mysqli -> connect_errno) {
-  echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-  exit();
-}
+connectToDB();
 
 $inserted_room = null;
 
@@ -18,8 +14,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $mysqli->query($sql);
 
     $last_id = $mysqli->insert_id;
-    $result = $mysqli->query("SELECT * FROM room WHERE id = $last_id");
-    $inserted_room = $result->fetch_assoc();
+    $inserted_room = fetchRoomFromDB($last_id);
 }
 
 $sql = "SELECT * FROM room WHERE room_name LIKE '%$name%'";
@@ -43,3 +38,16 @@ echo '<form method="POST">
         <input type="number" name="discount" placeholder="Discount"></input>
         <input type="submit"></input>
     </form>';
+
+function fetchRoomFromDB($id) {
+    $result = $mysqli->query("SELECT * FROM room WHERE id = $id");
+    return $result->fetch_assoc();
+}
+
+function connectToDB() {
+    $mysqli = new mysqli("127.0.0.1","devuser","1234","hotel");
+    if ($mysqli -> connect_errno) {
+    echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+    exit();
+    }
+}

@@ -4,11 +4,7 @@ Utilizar el código de index5.php para mostrar todas las habitaciones, pero incl
 Utilizar un if para ver si has buscado y hacer una consulta diferente para obtener las habitaciones WHERE name LIKE <search>
 */
 
-$mysqli = new mysqli("127.0.0.1","devuser","1234","hotel");
-if ($mysqli -> connect_errno) {
-  echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-  exit();
-}
+connectToDB();
 if($_GET['name']){
     $name = $mysqli->real_escape_string($_GET['name']);
     $sql = "SELECT * FROM room WHERE room_name LIKE '%$name%'";
@@ -33,3 +29,11 @@ echo '<form action="index7.php" method="GET">
         <input type="text" name="name" placeholder="Name"></input>
         <input type="submit"></input>
     </form>';
+
+function connectToDB() {
+    $mysqli = new mysqli("127.0.0.1","devuser","1234","hotel");
+    if ($mysqli -> connect_errno) {
+    echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+    exit();
+    }
+}

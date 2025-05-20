@@ -3,11 +3,7 @@
 Conectar a la base de datos de MySQL utilizando mysqli. Hacer una consulta para obtener las habitaciones y mostrarlas abajo utilizando el código de index3.php
 */
 
-$mysqli = new mysqli("127.0.0.1","devuser","1234","hotel");
-if ($mysqli -> connect_errno) {
-  echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-  exit();
-}
+connectToDB();
 $sql = "SELECT * FROM room";
 $rooms = $mysqli -> query($sql);
 $row = $rooms -> fetch_assoc();
@@ -21,3 +17,10 @@ foreach($rooms as $room) {
 }
 echo "</ol>";
 
+function connectToDB() {
+    $mysqli = new mysqli("127.0.0.1","devuser","1234","hotel");
+    if ($mysqli -> connect_errno) {
+    echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+    exit();
+    }
+}

@@ -3,13 +3,7 @@
 Acceder la página con un query param (localhost:8000/index4.php?id=1). Leer el parámetro de GET, importar las habitaciones JSON,
 y buscar dentro del array para ver si hay una habitación con el mismo ID. Si hay una, mostrarla con las propiedades Name, Number, Price y Discount
  */
-$json = file_get_contents('JSON/Rooms.json');
-
-if ($json === false) {
-    die("Error to load json");
-}
-
-$rooms = json_decode($json, true);
+$rooms = loadRoomsFromJson();
 
 $id = $_GET['id'];
 
@@ -21,3 +15,12 @@ foreach ($rooms as $room) {
         break;
     }
 }
+
+function loadRoomsFromJson() {
+    $json = file_get_contents('JSON/Rooms.json');
+    if ($json === false) {
+        die("Error al cargar el JSON");
+    }
+    return json_decode($json, true);
+}
+
