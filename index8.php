@@ -1,7 +1,7 @@
 <?php
 //Mostrar un formulario (method=”POST” y sin action) para crear una nueva habitación. Si accedes a la página con una peticion POST, mostrar la habitación nueva con el código de index4.php
 
-connectToDB();
+$mysqli = connectToDB();
 
 $inserted_room = null;
 
@@ -46,9 +46,10 @@ function fetchRoomFromDB($id) {
 }
 
 function connectToDB() {
-    $mysqli = new mysqli("127.0.0.1","devuser","1234","hotel");
+    $mysqli = new mysqli("192.168.1.130","devuser","1234","hotel");
     if ($mysqli -> connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-    exit();
+        echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+        exit();
     }
+    return $mysqli;
 }

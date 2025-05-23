@@ -4,7 +4,7 @@ Acceder la página con un query param (localhost:8000/index4.php?id=1). Conectar
 */
 $id = $_GET['id'];
 
-connectToDB();
+$mysqli = connectToDB();
 
 $result = fetchRoomFromDB($id);
 
@@ -24,10 +24,11 @@ function fetchRoomFromDB($id) {
 }
 
 function connectToDB() {
-    $mysqli = new mysqli("127.0.0.1","devuser","1234","hotel");
+    $mysqli = new mysqli("192.168.1.130","devuser","1234","hotel");
     if ($mysqli -> connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-    exit();
+        echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+        exit();
     }
+    return $mysqli;
 }
     
